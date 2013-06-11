@@ -61,6 +61,7 @@ class AgriLife_Site {
 				return $this->agriflex_2_options();
 				break;
 			case 'AgriFlex2012' :
+			case 'AgriLife' :
 				return $this->agriflex_2012_options();
 				break;
 			default :
@@ -71,7 +72,7 @@ class AgriLife_Site {
 
 	private function agriflex_2_options() {
 
-		$agency_payload = agriflex_agency();
+		$agency_payload = $this->agriflex_agency();
 
 		$agencies = array();
 
@@ -119,6 +120,58 @@ class AgriLife_Site {
 		$this->ext_type = $ext_types[$site_options['extension_type']];
 
 		return implode( '/', $agencies );
+
+	}
+
+	private function agriflex_agency() {
+
+		$path = get_template_directory();
+
+		$agencies = $this->of_get_option('agency-top');
+	  $ext_type = $this->of_get_option( 'ext-type' );
+	  $val = array_count_values( $agencies );
+
+	  $active = array();
+
+	  // Add the active agency slugs to the $active array
+	  foreach ( $agencies as $k => $v ) {
+	    if ( $v == 1 )
+	      array_push( $active, $k );
+	  }
+	  
+	  // If there's only one active agency, return true
+	  if ( $val[1] == 1 ) {
+	    $only = TRUE;
+	  } else {
+	    $only = FALSE;
+	  }
+
+	  // Build the return payload
+	  $return = array(
+	    'agencies' => $active,
+	    'single'   => $only,
+	    'ext-type' => $ext_type
+	  );
+
+	  return $return;
+
+	}
+
+	private function of_get_option( $name = '', $default = false ) {
+
+		$config = get_option( 'optionsframework' );
+
+		if ( ! isset( $config['id'] ) ) {
+			return $default;
+		}
+
+		$options = get_option( $config['id'] );
+
+		if ( isset( $options[$name] ) ) {
+			return $options[$name];
+    } else {
+      return $options;
+    }
 
 	}
 
