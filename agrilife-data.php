@@ -1,6 +1,6 @@
 <?php
 /**
-Plugin Name: Plugin Boilerplate
+Plugin Name: AgriLife Data
 Plugin URI: @todo Add the URL to the plugin page (your site, GitHub, etc.)
 Description: @todo Describe the plugin
 Version: 0.1
