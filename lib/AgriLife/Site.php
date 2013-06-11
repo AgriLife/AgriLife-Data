@@ -6,6 +6,8 @@ class AgriLife_Site {
 
 	private $site_theme;
 
+	private $ext_type;
+
 	private $site_info;
 
 	public function __construct( $site_id ) {
@@ -20,13 +22,21 @@ class AgriLife_Site {
 
 		$site_details = get_blog_details( $this->site_id );
 
+		$site_info = array(
+			'site_id' => $site_details->blog_id,
+			'site_name' => $site_details->blogname,
+			'site_url' => $site_details->siteurl,
+		);
+
 		switch_to_blog( $this->site_id );
 
 		$this->set_site_theme();
 
-		$site_details->agency = $this->add_site_agency();
+		$site_info['agency'] = $this->add_site_agency();
 
-		$this->site_info = $site_details;
+		$site_info['ext_type'] = $this->ext_type;
+
+		$this->site_info = $site_info;
 
 	}
 
@@ -40,13 +50,13 @@ class AgriLife_Site {
 
 		$theme = wp_get_theme();
 
-		$this->theme = $theme->Name;
+		$this->site_theme = $theme->Name;
 
 	}
 
 	private function add_site_agency() {
 
-		switch ( $this->theme ) {
+		switch ( $this->site_theme ) {
 			case 'AgriFlex2' :
 				return $this->agriflex_2_options();
 				break;
@@ -69,9 +79,9 @@ class AgriLife_Site {
 			$agencies[] = $agency;
 		}
 
-		$agencies['ext-type'] = $agency_payload['ext-type'];
+		$this->ext_type = $agency_payload['ext-type'];
 
-		return $agencies;
+		return implode( '/', $agencies );
 
 	}
 
@@ -106,9 +116,9 @@ class AgriLife_Site {
 			'sg',
 		);
 
-		$agencies['ext-type'] = $ext_types[$site_options['extension_type']];
+		$this->ext_type = $ext_types[$site_options['extension_type']];
 
-		return $agencies;
+		return implode( '/', $agencies );
 
 	}
 
