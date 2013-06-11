@@ -6,7 +6,7 @@ $t = new AgriLife_Data;
 
 $sites = get_site_option( 'site_data' );
 
-$fileName = 'somefile.csv';
+$fileName = 'site_data_' . date( 'Y-m-d' ) . '.csv';
 
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header('Content-Description: File Transfer');
