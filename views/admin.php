@@ -1,9 +1,12 @@
 <div class="wrap">
 
 	<?php screen_icon(); ?>
-	<?php // @todo Replace "plugin-name-locale" with a unique value for your plugin ?>
-	<h2><?php _e( 'My Plugin Name', 'plugin-name-locale' ); ?></h2>
+	<h2><?php _e( 'Site Data', 'agriflex' ); ?></h2>
 	
 	<?php $fields->settings(); ?>
+
+	<?php $t = new AgriLife_Data; ?>
+
+	<?php var_dump(get_site_option('site_data')); ?>
 	
 </div><!-- .wrap -->
