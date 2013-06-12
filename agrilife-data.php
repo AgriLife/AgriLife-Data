@@ -256,15 +256,15 @@ class AgrilifeData {
 
 		$config = array(
 			'slug'               => plugin_basename( __FILE__ ),
-			'proper_folder_name' => 'plugin-dir-name',
-			'api_url'            => 'https://api.github.com/repos/user/repository',
-			'raw_url'            => 'https://raw.github.com/user/repository/master',
-			'github_url'         => 'https://github.com/user/respoitory',
-			'zip_url'            => 'https://github.com/user/repository/zipball/master',
+			'proper_folder_name' => 'agrilife-data',
+			'api_url'            => 'https://api.github.com/repos/AgriLife/AgriLife-Data',
+			'raw_url'            => 'https://raw.github.com/AgriLife/AgriLife-Data/master',
+			'github_url'         => 'https://github.com/AgriLife/respoitory',
+			'zip_url'            => 'https://github.com/AgriLife/AgriLife-Data/zipball/master',
 			'sslverify'          => true,
 			'requires'           => '3.0',
-			'tested'             => '3.3',
-			'readme'             => 'README.txt',
+			'tested'             => '3.5.1',
+			'readme'             => 'README.md',
 		);
 
 		$updater = new Updater( $config );
