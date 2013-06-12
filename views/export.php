@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This file gets the data from AgriLife_Data and spits out a CSV to be
+ * automatically downloaded.
+ *
+ * We are required to include wp-load.php and AgriLife/Data.php since the form
+ * is calling this 'outside' of WordPress.
+ */
 include( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
 include( '../lib/AgriLife/Data.php' );
 $t = new AgriLife_Data;

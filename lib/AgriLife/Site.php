@@ -1,15 +1,38 @@
 <?php
 
+/**
+ * Creates and returns an array of site data from a single site
+ */
 class AgriLife_Site {
 
+	/**
+	 * The current site id
+	 * @var int
+	 */
 	private $site_id;
 
+	/**
+	 * The current site theme name
+	 * @var string
+	 */
 	private $site_theme;
 
+	/**
+	 * The current site Extension Type (might not be used)
+	 * @var string
+	 */
 	private $ext_type;
 
+	/**
+	 * The full array of site data
+	 * @var array
+	 */
 	private $site_info;
 
+	/**
+	 * Class constructor
+	 * @param int $site_id The requested site id
+	 */
 	public function __construct( $site_id ) {
 
 		$this->site_id = $site_id;
@@ -18,6 +41,11 @@ class AgriLife_Site {
 
 	}
 
+	/**
+	 * Setter for $site_info
+	 *
+	 * @since 0.1
+	 */
 	private function set_site_info() {
 
 		$site_details = get_blog_details( $this->site_id );
@@ -40,12 +68,23 @@ class AgriLife_Site {
 
 	}
 
+	/**
+	 * Public getter for $site_info
+	 *
+	 * @since 0.1
+	 * @return array The site info
+	 */
 	public function get_site_info() {
 
 		return $this->site_info;
 
 	}
 
+	/**
+	 * Setter for $site_theme
+	 *
+	 * @since 0.1
+	 */
 	private function set_site_theme() {
 
 		$theme = wp_get_theme();
@@ -54,6 +93,12 @@ class AgriLife_Site {
 
 	}
 
+	/**
+	 * Helper function to add the site agency to the site info array
+	 *
+	 * @since 0.1
+	 * @return array
+	 */
 	private function add_site_agency() {
 
 		switch ( $this->site_theme ) {
@@ -70,6 +115,13 @@ class AgriLife_Site {
 
 	}
 
+	/**
+	 * Returns the agency and sets $ext_type for sites that use
+	 * AgriFlex 2.x
+	 *
+	 * @since 0.1
+	 * @return string Site agenc(y/ies)
+	 */
 	private function agriflex_2_options() {
 
 		$agency_payload = $this->agriflex_agency();
@@ -86,6 +138,13 @@ class AgriLife_Site {
 
 	}
 
+	/**
+	 * Returns the agency and sets $ext_type for sites that use
+	 * AgriFlex 1.x
+	 *
+	 * @since 0.1
+	 * @return string Site agency(y/ies)
+	 */
 	private function agriflex_2012_options() {
 
 		$site_options = get_option('AgrilifeOptions');
@@ -123,6 +182,12 @@ class AgriLife_Site {
 
 	}
 
+	/**
+	 * Helper function to get the agencies from AgriFlex 2.x options
+	 *
+	 * @since 0.1
+	 * @return array The site agency data
+	 */
 	private function agriflex_agency() {
 
 		$path = get_template_directory();
@@ -157,6 +222,14 @@ class AgriLife_Site {
 
 	}
 
+	/**
+	 * Interface to retrieve options from the Options Framework
+	 *
+	 * @since 0.1
+	 * @param  string  $name    The option name
+	 * @param  boolean $default Return default
+	 * @return array           The options array
+	 */
 	private function of_get_option( $name = '', $default = false ) {
 
 		$config = get_option( 'optionsframework' );

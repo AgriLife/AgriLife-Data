@@ -1,9 +1,19 @@
 <?php
 
+/**
+ * Class to compile the site data
+ */
 class AgriLife_Data {
 
+	/**
+	 * The array of site data
+	 * @var array
+	 */
 	private $sites;
 
+	/**
+	 * Constructor function. Sets the data compilation in motion
+	 */
 	public function __construct() {
 
 		$this->set_sites();
@@ -11,6 +21,12 @@ class AgriLife_Data {
 
 	}
 
+	/**
+	 * Sets the $sites property by pulling from the wp_blogs table.
+	 *
+	 * @since 0.1
+	 * @global $wpdb
+	 */
 	private function set_sites() {
 
 		global $wpdb;
@@ -28,6 +44,12 @@ class AgriLife_Data {
 
 	}
 
+	/**
+	 * Updates site option in the database for easy access throughout WordPress
+	 *
+	 * @since 0.1
+	 * @uses AgriLife_Site
+	 */
 	private function set_sites_option() {
 
 		$sites = $this->sites;
