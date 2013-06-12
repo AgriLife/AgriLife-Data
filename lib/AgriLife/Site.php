@@ -65,6 +65,8 @@ class AgriLife_Site {
 		$site_info['ext_type'] = $this->ext_type;
 
 		$this->site_info = $site_info;
+		
+		restore_current_blog();
 
 	}
 

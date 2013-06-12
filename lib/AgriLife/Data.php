@@ -61,8 +61,6 @@ class AgriLife_Data {
 			$site_array[] = $s->get_site_info();
 		}
 
-		restore_current_blog();
-
 		update_site_option( 'site_data', $site_array );
 
 	}
