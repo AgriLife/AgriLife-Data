@@ -1,9 +1,13 @@
 <div class="wrap">
 
 	<?php screen_icon(); ?>
-	<?php // @todo Replace "plugin-name-locale" with a unique value for your plugin ?>
-	<h2><?php _e( 'My Plugin Name', 'plugin-name-locale' ); ?></h2>
+	<h2><?php _e( 'Site Data', 'agriflex' ); ?></h2>
 	
-	<?php $fields->settings(); ?>
+	<form method="post" name="site-data-exporter" action="<?php echo plugin_dir_url( __FILE__ ) . 'export.php'; ?>">
+		<h3>Download all site data: </h3>
+		<p class="submit">
+			<input class="button button-primary" type="submit" name="Download" value="Download" /></p>
+	</form>
+
 	
 </div><!-- .wrap -->

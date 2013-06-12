@@ -1,15 +1,15 @@
 <?php
 /**
 Plugin Name: AgriLife Data
-Plugin URI: @todo Add the URL to the plugin page (your site, GitHub, etc.)
-Description: @todo Describe the plugin
+Plugin URI: https://github.com/AgriLife/AgriLife-Data
+Description: Collects and presents data on AgriLife Multisite networks
 Version: 0.1
-Author: @todo Enter author name
-Author URI: @todo Enter author's URL
-Author Email: @todo Enter author's email
+Author: J. Aaron Eaton
+Author URI: http://channeleaton.com
+Author Email: aaron@channeleaton.com
 License:
 
-  Copyright 2013 @todo (email@domain.com)
+  Copyright 2013
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License, version 2, as
@@ -27,9 +27,6 @@ License:
 */
 
 /**
- * @todo Rename this class to a proper name for your plugin. Give a proper description of
- * the plugin, it's purpose, and any dependencies it has.
- *
  * Use PHPDoc directives if you wish to be able to document the code using a documentation
  * generator.
  *
@@ -38,13 +35,13 @@ License:
 
 // Autoload the vendor classes
 // @todo Change 'PluginName' to your class name
-spl_autoload_register( 'PluginName::vendor_autoload' );
+spl_autoload_register( 'AgrilifeData::vendor_autoload' );
 
 // Autoload the plugin classes
 // @todo Change 'PluginName' to your class name
-spl_autoload_register( 'PluginName::plugin_autoload' );
+spl_autoload_register( 'AgrilifeData::plugin_autoload' );
 
-class PluginName {
+class AgrilifeData {
 
 	/*--------------------------------------------*
 	 * Attributes
@@ -89,14 +86,11 @@ class PluginName {
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'plugin_textdomain' ) );
 
-		// Load the meta boxes
-		// add_action( 'init', array( $this, 'init_metaboxes' ) );
-
     /*
      * Add the options page and menu item.
      * Uncomment the following line to enable the Settings Page for the plugin:
      */
-	  // add_action( 'admin_menu', array( $this, 'plugin_admin_menu' ) );
+	  add_action( 'network_admin_menu', array( $this, 'plugin_admin_menu' ) );
 
     /*
 		 * Register admin styles and scripts
@@ -111,50 +105,10 @@ class PluginName {
 		// add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_styles' ) );
 		// add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_scripts' ) );
 
-		// Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
-		// register_activation_hook( __FILE__, array( $this, 'activate' ) );
-		// register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
-
 		// Load the Github Updater for non-WP repository plugins
 		add_action( 'plugins_loaded', array( $this, 'github_updater' ) );
 
-    /**
-     * @todo Define the custom functionality for your plugin. The first parameter of the
-     * add_action/add_filter calls are the hooks into which your code should fire.
-     *
-     * The second parameter is the function name located within this class. See the stubs
-     * later in the file.
-     *
-     * For more information:
-     * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-     */
-    add_action( 'TODO', array( $this, 'action_method_name' ) );
-    add_filter( 'TODO', array( $this, 'filter_method_name' ) );
-
 	} // end constructor
-
-	/**
-	 * Fired when the plugin is activated.
-	 *
-	 * @todo	Define activation functionality here
-	 * @param	boolean	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
-	 */
-	public function activate( $network_wide ) {
-
-
-
-	} // end activate
-
-	/**
-	 * Fired when the plugin is deactivated.
-	 * @todo Define deactivation functionality here
-	 * @param	boolean	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
-	 */
-	public function deactivate( $network_wide ) {
-
-
-
-	} // end deactivate
 
 	/**
 	 * Loads the plugin text domain for translation
@@ -163,7 +117,7 @@ class PluginName {
 	 */
 	public function plugin_textdomain() {
 
-		$domain = 'plugin-name-locale';
+		$domain = 'agriflex';
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 		
       load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
@@ -225,38 +179,19 @@ class PluginName {
 
 	/**
 	 * Registers and enqueues plugin-specific styles.
-	 *
-	 * @todo Change 'plugin-name-plugin-styles' to something unique to the plugin
 	 */
 	public function register_plugin_styles() {
 
-		wp_enqueue_style( 'plugin-name-plugin-styles', plugins_url( 'css/display.css', __FILE__ ) );
+		wp_enqueue_style( 'agrilife-data-styles', plugins_url( 'css/display.css', __FILE__ ) );
 
 	} // end register_plugin_styles
 
 	/**
 	 * Registers and enqueues plugin-specific scripts.
-	 * 
-	 * @todo Change 'plugin-name-plugin-scripts' to something unique to the plugin
 	 */
 	public function register_plugin_scripts() {
-		wp_enqueue_script( 'plugin-name-plugin-script', plugins_url( 'js/display.min.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'agrilife-data-scripts', plugins_url( 'js/display.min.js', __FILE__ ), array( 'jquery' ) );
 	} // end register_plugin_scripts
-
-	/**
-	 * Initializes the metaboxes. How about that?
-	 */
-	public function init_metaboxes() {
-
-		$meta = new Metaboxes();
-
-		$meta_boxes = array();
-		$meta_boxes = apply_filters ( 'cmb_meta_boxes' , $meta_boxes );
-		foreach ( $meta_boxes as $meta_box ) {
-			$my_box = new CMB_Init( $meta_box );
-		}
-
-	}
 
 	/**
 	 * Registers the administration menu for this plugin into the WordPress Dashboard menu.
@@ -267,15 +202,16 @@ class PluginName {
 	 */
 	public function plugin_admin_menu() {
 	
-		require( 'vendor/Settings.php' );
+		// require( 'vendor/Settings.php' );
 
 		$this->wpsf = new Settings( $this->path . 'lib/plugin-settings.php' );
 
-		add_menu_page(
-			'Plugin Settings',
-			'Plugin Settings',
-			'update_core',
-			'plugin-settings',
+		add_submenu_page(
+			'sites.php',
+			'Site Data',
+			'Site Data',
+			'manage_network',
+			'site-data',
 			array( $this, 'plugin_admin_page' )
 		);
     	
@@ -297,42 +233,6 @@ class PluginName {
 		echo $settings_page;
 
 	} // end plugin_admin_page
-	
-	/*--------------------------------------------*
-	 * Core Functions
-	 *---------------------------------------------*/
-
-	/**
- 	 * NOTE:  Actions are points in the execution of a page or process
-	 *        lifecycle that WordPress fires.
-	 *
-	 *		  WordPress Actions: http://codex.wordpress.org/Plugin_API#Actions
-	 *		  Action Reference:  http://codex.wordpress.org/Plugin_API/Action_Reference
-	 *		  
-	 * @todo Define your action method here
-	 *
-	 */
-	public function action_method_name() {
-
-
-
-	} // end action_method_name
-
-	/**
-	 * NOTE:  Filters are points of execution in which WordPress modifies data
-	 *        before saving it or sending it to the browser.
-	 *
-	 *		  WordPress Filters: http://codex.wordpress.org/Plugin_API#Filters
-	 *		  Filter Reference:  http://codex.wordpress.org/Plugin_API/Filter_Reference
-	 *		  
-	 * @todo Define your filter method here
-	 *
-	 */
-	public function filter_method_name() {
-
-
-
-	} // end filter_method_name
 
 	/**
 	 * Check the plugin GitHub repository for updates.
@@ -349,22 +249,22 @@ class PluginName {
 		 * Leave the following definition set to false until you are testing the update feature.
 		 * Return to false when you are ready to distribute.
 		 */
-		if ( ! defined( 'WP_GITHUB_FORCE_UPDATE' ) )
-			define( 'WP_GITHUB_FORCE_UPDATE', false );
+		// if ( ! defined( 'WP_GITHUB_FORCE_UPDATE' ) )
+		// 	define( 'WP_GITHUB_FORCE_UPDATE', false );
 
 		if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
 
 		$config = array(
 			'slug'               => plugin_basename( __FILE__ ),
-			'proper_folder_name' => 'plugin-dir-name',
-			'api_url'            => 'https://api.github.com/repos/user/repository',
-			'raw_url'            => 'https://raw.github.com/user/repository/master',
-			'github_url'         => 'https://github.com/user/respoitory',
-			'zip_url'            => 'https://github.com/user/repository/zipball/master',
+			'proper_folder_name' => 'agrilife-data',
+			'api_url'            => 'https://api.github.com/repos/AgriLife/AgriLife-Data',
+			'raw_url'            => 'https://raw.github.com/AgriLife/AgriLife-Data/master',
+			'github_url'         => 'https://github.com/AgriLife/respoitory',
+			'zip_url'            => 'https://github.com/AgriLife/AgriLife-Data/zipball/master',
 			'sslverify'          => true,
 			'requires'           => '3.0',
-			'tested'             => '3.3',
-			'readme'             => 'README.txt',
+			'tested'             => '3.5.1',
+			'readme'             => 'README.md',
 		);
 
 		$updater = new Updater( $config );
@@ -411,5 +311,4 @@ class PluginName {
 
 } // end class
 
-// @todo Update the instantiation call of your plugin to the name given at the class definition
-PluginName::get_instance();
+AgrilifeData::get_instance();
