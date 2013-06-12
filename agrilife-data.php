@@ -86,9 +86,6 @@ class AgrilifeData {
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'plugin_textdomain' ) );
 
-		// Load the meta boxes
-		// add_action( 'init', array( $this, 'init_metaboxes' ) );
-
     /*
      * Add the options page and menu item.
      * Uncomment the following line to enable the Settings Page for the plugin:
@@ -108,50 +105,10 @@ class AgrilifeData {
 		// add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_styles' ) );
 		// add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_scripts' ) );
 
-		// Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
-		// register_activation_hook( __FILE__, array( $this, 'activate' ) );
-		// register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
-
 		// Load the Github Updater for non-WP repository plugins
 		add_action( 'plugins_loaded', array( $this, 'github_updater' ) );
 
-    /**
-     * @todo Define the custom functionality for your plugin. The first parameter of the
-     * add_action/add_filter calls are the hooks into which your code should fire.
-     *
-     * The second parameter is the function name located within this class. See the stubs
-     * later in the file.
-     *
-     * For more information:
-     * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-     */
-    add_action( 'TODO', array( $this, 'action_method_name' ) );
-    add_filter( 'TODO', array( $this, 'filter_method_name' ) );
-
 	} // end constructor
-
-	/**
-	 * Fired when the plugin is activated.
-	 *
-	 * @todo	Define activation functionality here
-	 * @param	boolean	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
-	 */
-	public function activate( $network_wide ) {
-
-
-
-	} // end activate
-
-	/**
-	 * Fired when the plugin is deactivated.
-	 * @todo Define deactivation functionality here
-	 * @param	boolean	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
-	 */
-	public function deactivate( $network_wide ) {
-
-
-
-	} // end deactivate
 
 	/**
 	 * Loads the plugin text domain for translation
@@ -237,21 +194,6 @@ class AgrilifeData {
 	} // end register_plugin_scripts
 
 	/**
-	 * Initializes the metaboxes. How about that?
-	 */
-	public function init_metaboxes() {
-
-		$meta = new Metaboxes();
-
-		$meta_boxes = array();
-		$meta_boxes = apply_filters ( 'cmb_meta_boxes' , $meta_boxes );
-		foreach ( $meta_boxes as $meta_box ) {
-			$my_box = new CMB_Init( $meta_box );
-		}
-
-	}
-
-	/**
 	 * Registers the administration menu for this plugin into the WordPress Dashboard menu.
 	 * 
 	 * @todo Change 'Page Settings' to the title of your plugin admin page
@@ -291,42 +233,6 @@ class AgrilifeData {
 		echo $settings_page;
 
 	} // end plugin_admin_page
-	
-	/*--------------------------------------------*
-	 * Core Functions
-	 *---------------------------------------------*/
-
-	/**
- 	 * NOTE:  Actions are points in the execution of a page or process
-	 *        lifecycle that WordPress fires.
-	 *
-	 *		  WordPress Actions: http://codex.wordpress.org/Plugin_API#Actions
-	 *		  Action Reference:  http://codex.wordpress.org/Plugin_API/Action_Reference
-	 *		  
-	 * @todo Define your action method here
-	 *
-	 */
-	public function action_method_name() {
-
-
-
-	} // end action_method_name
-
-	/**
-	 * NOTE:  Filters are points of execution in which WordPress modifies data
-	 *        before saving it or sending it to the browser.
-	 *
-	 *		  WordPress Filters: http://codex.wordpress.org/Plugin_API#Filters
-	 *		  Filter Reference:  http://codex.wordpress.org/Plugin_API/Filter_Reference
-	 *		  
-	 * @todo Define your filter method here
-	 *
-	 */
-	public function filter_method_name() {
-
-
-
-	} // end filter_method_name
 
 	/**
 	 * Check the plugin GitHub repository for updates.
