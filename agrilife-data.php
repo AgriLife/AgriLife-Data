@@ -3,7 +3,7 @@
 Plugin Name: AgriLife Data
 Plugin URI: https://github.com/AgriLife/AgriLife-Data
 Description: Collects and presents data on AgriLife Multisite networks
-Version: 0.1
+Version: 0.2
 Author: J. Aaron Eaton
 Author URI: http://channeleaton.com
 Author Email: aaron@channeleaton.com
