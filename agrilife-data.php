@@ -3,7 +3,7 @@
 Plugin Name: AgriLife Data
 Plugin URI: https://github.com/AgriLife/AgriLife-Data
 Description: Collects and presents data on AgriLife Multisite networks
-Version: 0.1
+Version: 0.2
 Author: J. Aaron Eaton
 Author URI: http://channeleaton.com
 Author Email: aaron@channeleaton.com
@@ -106,7 +106,7 @@ class AgrilifeData {
 		// add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_scripts' ) );
 
 		// Load the Github Updater for non-WP repository plugins
-		add_action( 'plugins_loaded', array( $this, 'github_updater' ) );
+		// add_action( 'plugins_loaded', array( $this, 'github_updater' ) );
 
 	} // end constructor
 
@@ -214,6 +214,15 @@ class AgrilifeData {
 			'site-data',
 			array( $this, 'plugin_admin_page' )
 		);
+
+		add_submenu_page(
+			'plugins.php',
+			'Export Plugin List',
+			'Export Plugin List',
+			'manage_network',
+			'plugin-list',
+			array( $this, 'plugin_list_page' )
+		);
     	
 	} // end plugin_admin_menu
 	
@@ -233,6 +242,20 @@ class AgrilifeData {
 		echo $settings_page;
 
 	} // end plugin_admin_page
+
+	public function plugin_list_page() {
+
+		ob_start();
+
+		$fields = $this->wpsf;
+		include_once( 'views/plugin-list.php' );
+
+		$plugin_list = ob_get_contents();
+		ob_clean();
+
+		echo $plugin_list;
+
+	}
 
 	/**
 	 * Check the plugin GitHub repository for updates.

@@ -1,16 +1,18 @@
 # AgriLife Data
 
-Current Version: 0.1
+Current Version: 0.2
 
-This plugin allows network administrators download a CSV containing various information on the network sites. The download area can be accessed by going to Sites->Site Data in the network admin area.
+This plugin allows network administrators download CSVs containing various information about the network and the sites it contains. 
 
-## CSV Fields
+## Available Reports
 
-* Site ID
-* Site Name
-* Site URL
-* Agency Affilitation
-* Extension Type (if applicable)
+### AgriLife Site Options
+
+A report of each site with its site ID, Name, URL, Agency Affiliation and Extension Type (if applicable).
+
+### Plugin Data
+
+A report of each installed plugin with all fields from get_plugin_data().
 
 ## License
 
@@ -30,6 +32,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ## Changelog
+
+### v0.2
+
+* Added plugin data report
 
 ### v0.1
 
