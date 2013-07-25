@@ -106,7 +106,7 @@ class AgrilifeData {
 		// add_action( 'wp_enqueue_scripts', array( $this, 'register_plugin_scripts' ) );
 
 		// Load the Github Updater for non-WP repository plugins
-		add_action( 'plugins_loaded', array( $this, 'github_updater' ) );
+		// add_action( 'plugins_loaded', array( $this, 'github_updater' ) );
 
 	} // end constructor
 
