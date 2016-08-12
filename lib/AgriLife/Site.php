@@ -104,6 +104,9 @@ class AgriLife_Site {
 	private function add_site_agency() {
 
 		switch ( $this->site_theme ) {
+			case 'AgriFlex3' :
+				return $this->agriflex_3_options();
+				break;
 			case 'AgriFlex2' :
 				return $this->agriflex_2_options();
 				break;
@@ -114,6 +117,25 @@ class AgriLife_Site {
 			default :
 				return 'Unknown';
 		}
+
+	}
+
+	/**
+	 * Returns the agency and sets $ext_type for sites that use
+	 * AgriFlex 3.x
+	 *
+	 * @since 0.1
+	 * @return string Site agenc(y/ies)
+	 */
+	private function agriflex_3_options() {
+
+		$agency_top = get_field( 'agency_top', 'option' );
+
+		if( $agency_top == 'extension' || $agency_top == 'college/extension' ){
+			$this->ext_type = get_field( 'ext_type', 'option' );
+		}
+
+		return $agency_top;
 
 	}
 
