@@ -131,11 +131,17 @@ class AgriLife_Site {
 
 		$agency_top = get_field( 'agency_top', 'option' );
 
-		if( $agency_top == 'extension' || $agency_top == 'college/extension' ){
-			$this->ext_type = get_field( 'ext_type', 'option' );
+		if( !is_array( $agency_top ) ){
+			if( $agency_top == 'extension' ){
+				$this->ext_type = get_field( 'ext_type', 'option' );
+			}
+			return $agency_top;
+		} else {
+			if( in_array( 'extension', $agency_top ) ){
+				$this->ext_type = implode( '/', get_field( 'ext_type', 'option' ) );
+			}
+			return implode( '/', $agency_top );
 		}
-
-		return $agency_top;
 
 	}
 
