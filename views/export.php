@@ -23,17 +23,48 @@ header("Expires: 0");
 header("Pragma: public");
  
 $fh = @fopen( 'php://output', 'w' );
- 
-$headerDisplayed = false;
- 
-foreach ( $sites as $data ) {
-  // Add a header row if it hasn't been added yet
-  if ( !$headerDisplayed ) {
-    // Use the keys from $data as the titles
-    fputcsv($fh, array_keys($data));
-    $headerDisplayed = true;
-  }
 
+$agencies = array();
+$exttypes = array();
+
+foreach( $sites as $data ) {
+  $agency = $data['agency'];
+
+  if( count($agency) == 1 && $agency != 'Unknown' ){
+    if( !array_key_exists( $agency, $agencies ) ){
+      $agencies[$agency] = 1;
+    } else {
+      $agencies[$agency]++;
+    }
+
+    $exttype = $data['ext_type'];
+    if( count($exttype) == 1 ){
+      if( !array_key_exists( $exttype, $exttypes ) ){
+        $exttypes[$exttype] = 1;
+      } else {
+        $exttypes[$exttype]++;
+      }
+    }
+  }
+}
+
+fputcsv( $fh, array('Agency Totals') );
+
+foreach( $agencies as $key=>$value ){
+  fputcsv( $fh, array( $key, $value ) );
+}
+
+fputcsv( $fh, array('') );
+fputcsv( $fh, array('Extension Agency Types') );
+
+foreach( $exttypes as $key=>$value ){
+  fputcsv( $fh, array( $key, $value ) );
+}
+
+fputcsv( $fh, array('') );
+fputcsv( $fh, array_keys( $sites[0] ) );
+ 
+foreach( $sites as $data ) {
   // Put the data into the stream
   fputcsv($fh, $data);
 }
