@@ -26,6 +26,12 @@ License:
 
 */
 
+define( 'AGDATA_DIR_PATH', plugin_dir_path( __FILE__ ) );
+
+include( AGDATA_DIR_PATH . 'lib/AgencyAffiliation.php' );
+
+new AgencyAffiliation;
+
 /**
  * Use PHPDoc directives if you wish to be able to document the code using a documentation
  * generator.

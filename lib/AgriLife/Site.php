@@ -103,44 +103,65 @@ class AgriLife_Site {
 	 */
 	private function add_site_agency() {
 
-		switch ( $this->site_theme ) {
-			case 'AgriFlex3' :
-				return $this->agriflex_3_options();
-				break;
-			case 'AgriFlex2' :
-				return $this->agriflex_2_options();
-				break;
-			case 'AgriFlex2012' :
-			case 'AgriLife' :
+		$sitetheme = $this->site_theme;
+
+		if( $sitetheme == 'AgriFlex2' ){
+
+			return $this->agriflex_2_options();
+
+		} else {
+
+			$defaultval = $this->default_options();
+
+			if( !empty( $defaultval ) ){
+
+				return $defaultval;
+
+			} else if( $sitetheme == 'AgriFlex2012' || $sitetheme == 'AgriLife' ){
+
 				return $this->agriflex_2012_options();
-				break;
-			default :
+
+			} else {
+
 				return 'Unknown';
+
+			}
+
 		}
 
 	}
 
 	/**
-	 * Returns the agency and sets $ext_type for sites that use
-	 * AgriFlex 3.x
+	 * Returns the agency and sets $ext_type for sites not using
+	 * Agriflex2, AgriFlex2012, or AgriLife themes
 	 *
 	 * @since 0.1
 	 * @return string Site agenc(y/ies)
 	 */
-	private function agriflex_3_options() {
+	private function default_options() {
 
-		$agency_top = get_field( 'agency_top', 'option' );
+		$agency_top = function_exists('get_field') ? get_field( 'agency_top', 'option' ) : '';
 
 		if( !is_array( $agency_top ) ){
+
 			if( $agency_top == 'extension' ){
+
 				$this->ext_type = get_field( 'ext_type', 'option' );
+
 			}
+
 			return $agency_top;
+
 		} else {
+
 			if( in_array( 'extension', $agency_top ) ){
+
 				$this->ext_type = implode( '/', get_field( 'ext_type', 'option' ) );
+
 			}
+
 			return implode( '/', $agency_top );
+
 		}
 
 	}
