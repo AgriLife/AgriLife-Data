@@ -160,6 +160,8 @@ class AgriLife_Site {
 
 			}
 
+			sort( $agency_top );
+
 			return implode( '/', $agency_top );
 
 		}
@@ -183,9 +185,11 @@ class AgriLife_Site {
 			$agencies[] = $agency;
 		}
 
-		$this->ext_type = $agency_payload['ext-type'];
+		$this->ext_type = count($agencies) > 0 ? $agency_payload['ext-type'] : '';
 
-		return implode( '/', $agencies );
+		sort( $agencies );
+
+		return count($agencies) > 0 ? implode( '/', $agencies ) : 'Unknown';
 
 	}
 
@@ -229,7 +233,9 @@ class AgriLife_Site {
 
 		$this->ext_type = $ext_types[$site_options['extension_type']];
 
-		return implode( '/', $agencies );
+		sort( $agencies );
+		
+		return count($agencies) > 0 ? implode( '/', $agencies ) : 'Unknown';
 
 	}
 
@@ -244,6 +250,10 @@ class AgriLife_Site {
 		$path = get_template_directory();
 
 		$agencies = $this->of_get_option('agency-top');
+		if(!$agencies){
+			$agencies = array();
+		}
+
 	  $ext_type = $this->of_get_option( 'ext-type' );
 	  $val = array_count_values( $agencies );
 

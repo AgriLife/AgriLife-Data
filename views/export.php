@@ -38,7 +38,7 @@ foreach( $sites as $data ) {
     }
 
     $exttype = $data['ext_type'];
-    if( count($exttype) == 1 ){
+    if( count($exttype) == 1 && $exttype != '' ){
       if( !array_key_exists( $exttype, $exttypes ) ){
         $exttypes[$exttype] = 1;
       } else {
@@ -50,12 +50,16 @@ foreach( $sites as $data ) {
 
 fputcsv( $fh, array('Agency Totals') );
 
+ksort( $agencies );
+
 foreach( $agencies as $key=>$value ){
   fputcsv( $fh, array( $key, $value ) );
 }
 
 fputcsv( $fh, array('') );
 fputcsv( $fh, array('Extension Agency Types') );
+
+ksort( $exttypes );
 
 foreach( $exttypes as $key=>$value ){
   fputcsv( $fh, array( $key, $value ) );
