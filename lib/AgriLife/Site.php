@@ -64,6 +64,8 @@ class AgriLife_Site {
 
 		$site_info['ext_type'] = $this->ext_type;
 
+		$site_info['google_analytics'] = $this->add_ga_code();
+
 		$this->site_info = $site_info;
 		
 		restore_current_blog();
@@ -128,6 +130,26 @@ class AgriLife_Site {
 			}
 
 		}
+
+	}
+
+	/**
+	 * Helper function to add the google analytics to the site info array
+	 *
+	 * @since 0.1
+	 * @return array
+	 */
+	private function add_ga_code() {
+
+		$uacode = get_option('yst_ga');
+
+		if(is_array($uacode)){
+			$uacode = $uacode['ga_general']['analytics_profile_code'];
+		} else {
+			$uacode = '';
+		}
+
+		return $uacode;
 
 	}
 
