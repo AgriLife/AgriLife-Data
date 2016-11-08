@@ -157,39 +157,31 @@ class AgriLife_Site {
 
 	private function add_cas_url() {
 
+		$plugin = 'cas-maestro/cas-maestro.php';
 		$default = 'signon.agnet.tamu.edu';
 		$value = '';
 
-	    // Combine network and site plugins
-	    $siteplugins = array_map( 'strtolower', get_option('active_plugins') );
-	    $networkplugins = array();
-	    if(function_exists('wp_get_active_network_plugins')){
-	      $networkplugins = array_map( 'strtolower', str_replace( WP_PLUGIN_DIR . '/', '', wp_get_active_network_plugins() ) );
-	    }
-	    $activeplugins = array_merge( $siteplugins, $networkplugins );
+    // Check if plugin is active
+    $siteactive = is_plugin_active( $plugin );
+    $networkactive = is_plugin_active_for_network( $plugin );
 
-	    // Get CAS hostname wherever it is available
-	    foreach($networkplugins as $plugin){
-	        $match = strpos($plugin, 'cas-maestro');
-			if($match !== false){
-	        	// CAS Maestro is network active
-				if(get_site_option('wpCAS_network_settings') !== false){
-					$value = get_site_option('wpCAS_network_settings')['server_hostname'];
-				} else {
-					$value = $default;
-				}
-			}
-	    }
+    if( $siteactive || $networkactive ){
 
-	    foreach($siteplugins as $plugin){
-	        $match = strpos($plugin, 'cas-maestro');
-			if($match !== false){
-				if(get_option('wpCAS_settings') !== false){
-					$value = get_option('wpCAS_settings')['server_hostname'];
-				} else if(empty($value)){
-					$value = $default;
-				}
+    	// Get CAS hostname wherever it is available
+			if(get_option('wpCAS_settings') !== false){
+
+				$value = get_option('wpCAS_settings')['server_hostname'];
+
+			} else if(get_site_option('wpCAS_network_settings') !== false){
+
+				$value = get_site_option('wpCAS_network_settings')['server_hostname'];
+
+			} else {
+
+				$value = $default;
+
 			}
+
 		}
 
 		return $value;
