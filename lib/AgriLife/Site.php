@@ -143,12 +143,14 @@ class AgriLife_Site {
 	 */
 	private function add_ga_code() {
 
-		$uacode = get_option('yst_ga');
+		$opt = get_option('yst_ga');
+		$uacode = '';
 
-		if(is_array($uacode)){
-			$uacode = $uacode['ga_general']['analytics_profile_code'];
-		} else {
-			$uacode = '';
+		if(is_array($opt)){
+			$uacode = $opt['ga_general']['analytics_profile_code'];
+			if(empty($uacode)){
+				$uacode = $opt['ga_general']['manual_ua_code_field'];
+			}
 		}
 
 		return $uacode;
