@@ -1,7 +1,7 @@
 <?php
 /**
  * WordPress Settings Framework
- * 
+ *
  * @author Gilbert Pellegrom
  * @link https://github.com/gilbitron/WordPress-Settings-Framework
  * @version 1.4
@@ -13,16 +13,16 @@ if( !class_exists('Settings') ){
      * WordPressSettingsFramework class
      */
     class Settings {
-    
+
         /**
          * @access private
-         * @var string 
+         * @var string
          */
         private $option_group;
-    
+
         /**
          * Constructor
-         * 
+         *
          * @param string path to settings file
          * @param string optional "option_group" override
          */
@@ -30,25 +30,25 @@ if( !class_exists('Settings') ){
         {
             if( !is_file( $settings_file ) ) return;
             require_once( $settings_file );
-            
+
             $this->option_group = preg_replace("/[^a-z0-9]+/i", "", basename( $settings_file, '.php' ));
             if( $option_group ) $this->option_group = $option_group;
-             
+
             add_action('admin_init', array(&$this, 'admin_init'));
             add_action('admin_notices', array(&$this, 'admin_notices'));
             add_action('admin_enqueue_scripts', array(&$this, 'admin_enqueue_scripts'));
         }
-        
+
         /**
          * Get the option group for this instance
-         * 
+         *
          * @return string the "option_group"
          */
         function get_option_group()
         {
             return $this->option_group;
         }
-        
+
         /**
          * Registers the internal WordPress settings
          */
@@ -57,7 +57,7 @@ if( !class_exists('Settings') ){
             register_setting( $this->option_group, $this->option_group .'_settings', array(&$this, 'settings_validate') );
             $this->process_settings();
         }
-        
+
         /**
          * Displays any errors from the WordPress settings API
          */
@@ -65,7 +65,7 @@ if( !class_exists('Settings') ){
         {
             settings_errors();
         }
-        
+
         /**
          * Enqueue scripts and styles
          */
@@ -73,16 +73,16 @@ if( !class_exists('Settings') ){
         {
             wp_enqueue_style('farbtastic');
             wp_enqueue_style('thickbox');
-            
+
             wp_enqueue_script('jquery');
             wp_enqueue_script('farbtastic');
             wp_enqueue_script('media-upload');
             wp_enqueue_script('thickbox');
         }
-        
+
         /**
          * Adds a filter for settings validation
-         * 
+         *
          * @param array the un-validated settings
          * @return array the validated settings
          */
@@ -90,7 +90,7 @@ if( !class_exists('Settings') ){
         {
             return apply_filters( $this->option_group .'_settings_validate', $input );
         }
-        
+
         /**
          * Displays the "section_description" if speicified in $wpsf_settings
          *
@@ -108,7 +108,7 @@ if( !class_exists('Settings') ){
                 }
             }
         }
-        
+
         /**
          * Processes $wpsf_settings and adds the sections and fields via the WordPress settings API
          */
@@ -131,19 +131,24 @@ if( !class_exists('Settings') ){
                 }
             }
         }
-        
+
         /**
          * Usort callback. Sorts $wpsf_settings by "section_order"
-         * 
+         *
          * @param mixed section order a
          * @param mixed section order b
          * @return int order
          */
         function sort_array( $a, $b )
         {
+
+            if( !isset($a['section_order']) )
+                return;
+
             return $a['section_order'] > $b['section_order'];
+
         }
-        
+
         /**
          * Generates the HTML output of the settings fields
          *
@@ -163,11 +168,11 @@ if( !class_exists('Settings') ){
             );
             $defaults = apply_filters( 'wpsf_defaults', $defaults );
             extract( wp_parse_args( $args['field'], $defaults ) );
-            
+
             $options = get_option( $this->option_group .'_settings' );
             $el_id = $this->option_group .'_'. $section['section_id'] .'_'. $id;
             $val = (isset($options[$el_id])) ? $options[$el_id] : $std;
-            
+
             do_action('wpsf_before_field');
             do_action('wpsf_before_field_'. $el_id);
             switch( $type ){
@@ -220,7 +225,7 @@ if( !class_exists('Settings') ){
                     echo '<div id="'. $el_id .'_cp" style="position:absolute;top:0;left:190px;background:#fff;z-index:9999;"></div>';
                     if($desc)  echo '<p class="description">'. $desc .'</p>';
                     echo '<script type="text/javascript">
-                    jQuery(document).ready(function($){ 
+                    jQuery(document).ready(function($){
                         var colorPicker = $("#'. $el_id .'_cp");
                         colorPicker.farbtastic("#'. $el_id .'");
                         colorPicker.hide();
@@ -267,7 +272,7 @@ if( !class_exists('Settings') ){
             do_action('wpsf_after_field');
             do_action('wpsf_after_field_'. $el_id);
         }
-    
+
         /**
          * Output the settings form
          */
@@ -284,14 +289,14 @@ if( !class_exists('Settings') ){
             <?php
             do_action('wpsf_after_settings');
         }
-    
-    }   
+
+    }
 }
 
 if( !function_exists('wpsf_get_option_group') ){
     /**
      * Converts the settings file name to option group id
-     * 
+     *
      * @param string settings file
      * @return string option group id
      */
@@ -304,7 +309,7 @@ if( !function_exists('wpsf_get_option_group') ){
 if( !function_exists('wpsf_get_settings') ){
     /**
      * Get the settings from a settings file/option group
-     * 
+     *
      * @param string path to settings file
      * @param string optional "option_group" override
      * @return array settings
@@ -319,7 +324,7 @@ if( !function_exists('wpsf_get_settings') ){
 if( !function_exists('wpsf_get_setting') ){
     /**
      * Get a setting from an option group
-     * 
+     *
      * @param string option group id
      * @param string section id
      * @param string field id
@@ -335,7 +340,7 @@ if( !function_exists('wpsf_get_setting') ){
 if( !function_exists('wpsf_delete_settings') ){
     /**
      * Delete all the saved settings from a settings file/option group
-     * 
+     *
      * @param string path to settings file
      * @param string optional "option_group" override
      */

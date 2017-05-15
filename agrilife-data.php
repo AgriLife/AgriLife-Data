@@ -52,13 +52,13 @@ class AgrilifeData {
 	/*--------------------------------------------*
 	 * Attributes
 	 *--------------------------------------------*/
-	 
+
 	/** Refers to a single instance of this class. */
 	private static $instance = null;
 
 	/** The plugin version number */
 	private $version = '0.1';
-	
+
 	/** Refers to the slug of the plugin screen. */
 	private $plugin_screen_slug = null;
 
@@ -71,13 +71,13 @@ class AgrilifeData {
 	/*--------------------------------------------*
 	 * Constructor
 	 *--------------------------------------------*/
-	 
+
 	/**
 	 * Creates or returns an instance of this class.
 	 *
 	 * @return	PluginName	A single instance of this class.
 	 */
-	public function get_instance() {
+	public static function get_instance() {
 		return null == self::$instance ? new self : self::$instance;
 	} // end get_instance;
 
@@ -102,7 +102,7 @@ class AgrilifeData {
 		 * Register admin styles and scripts
 		 * If the Settings page has been activated using the above hook, the scripts and styles
 		 * will only be loaded on the settings page. If not, they will be loaded for all
-		 * admin pages. 
+		 * admin pages.
 		 */
 		// add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_styles' ) );
 		// add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts' ) );
@@ -125,7 +125,7 @@ class AgrilifeData {
 
 		$domain = 'agriflex';
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-		
+
       load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
       load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 
@@ -140,21 +140,21 @@ class AgrilifeData {
 		 * Check if the plugin has registered a settings page
 		 * and if it has, make sure only to enqueue the scripts on the relevant screens
 		 */
-		
+
 	    if ( isset( $this->plugin_screen_slug ) ){
-	    	
+
 	    	/*
 			 * Check if current screen is the admin page for this plugin
 			 * Don't enqueue stylesheet or JavaScript if it's not
 			 */
-	    
+
 			 $screen = get_current_screen();
 			 if ( $screen->id == $this->plugin_screen_slug ) {
 			 	wp_enqueue_style( 'plugin-name-admin-styles', plugins_url( 'css/admin.css', __FILE__ ) );
 			 } // end if
-	    
+
 	    } // end if
-	    
+
 	} // end register_admin_styles
 
 	/**
@@ -166,19 +166,19 @@ class AgrilifeData {
 		 * Check if the plugin has registered a settings page
 		 * and if it has, make sure only to enqueue the scripts on the relevant screens
 		 */
-		
+
     if ( isset( $this->plugin_screen_slug ) ){
-    	
+
     	/*
 			 * Check if current screen is the admin page for this plugin
 			 * Don't enqueue stylesheet or JavaScript if it's not
 			 */
-	    
+
 			$screen = get_current_screen();
 			if ( $screen->id == $this->plugin_screen_slug ) {
 				wp_enqueue_script( 'plugin-name-admin-script', plugins_url( 'js/admin.min.js', __FILE__ ), array( 'jquery' ) );
 			} // end if
-    
+
     } // end if
 
 	} // end register_admin_scripts
@@ -201,13 +201,13 @@ class AgrilifeData {
 
 	/**
 	 * Registers the administration menu for this plugin into the WordPress Dashboard menu.
-	 * 
+	 *
 	 * @todo Change 'Page Settings' to the title of your plugin admin page
 	 * @todo Change 'update_core' to the required capability
 	 * @todo Change 'plugin-settings' to the slug of your plugin
 	 */
 	public function plugin_admin_menu() {
-	
+
 		// require( 'vendor/Settings.php' );
 
 		$this->wpsf = new Settings( $this->path . 'lib/plugin-settings.php' );
@@ -229,9 +229,9 @@ class AgrilifeData {
 			'plugin-list',
 			array( $this, 'plugin_list_page' )
 		);
-    	
+
 	} // end plugin_admin_menu
-	
+
 	/**
 	 * Renders the options page for this plugin.
 	 */
@@ -304,14 +304,14 @@ class AgrilifeData {
 
 	/**
 	 * Autoloads classes in the 'vendor' directory
-	 * 
+	 *
 	 * @param  string $classname The class name being autoloaded
 	 */
 	public static function vendor_autoload( $classname ) {
 
 		$filename = dirname( __FILE__ ) .
       DIRECTORY_SEPARATOR .
-      'vendor' . 
+      'vendor' .
       DIRECTORY_SEPARATOR .
       str_replace( '_', DIRECTORY_SEPARATOR, $classname ) .
       '.php';
@@ -322,14 +322,14 @@ class AgrilifeData {
 
 	/**
 	 * Autoloads classes in the 'lib' directory
-	 * 
+	 *
 	 * @param  string $classname The class name being autoloaded
 	 */
 	public static function plugin_autoload( $classname ) {
 
 		$filename = dirname( __FILE__ ) .
       DIRECTORY_SEPARATOR .
-      'lib' . 
+      'lib' .
       DIRECTORY_SEPARATOR .
       str_replace( '_', DIRECTORY_SEPARATOR, $classname ) .
       '.php';
