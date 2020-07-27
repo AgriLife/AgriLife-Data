@@ -27,6 +27,20 @@ License:
 */
 
 define( 'AGDATA_DIR_PATH', plugin_dir_path( __FILE__ ) );
+/*
+	Array of strings declaring the agency type used by the agrilife-extension-unit plugin.
+	Possible values: college, extension, research, tfs, tvmdl
+*/
+if ( ! defined( 'AGDATA_AGENCY' ) ) {
+	define( 'AGDATA_AGENCY', NULL );
+}
+/*
+	Array of strings declaring the extension type used by the agrilife-extension-unit plugin.
+	Possible values: typical, 4h, county, tce, mg, mn, sg
+*/
+if ( ! defined( 'AGDATA_EXTTYPE' ) ) {
+	define( 'AGDATA_EXTTYPE', NULL );
+}
 
 include( AGDATA_DIR_PATH . 'lib/AgencyAffiliation.php' );
 
